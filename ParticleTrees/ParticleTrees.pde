@@ -21,14 +21,14 @@ void setup() {
   if (background.width != width || background.height != height) background.resize(width, height);
   src = loadImage("img/src.png");
   src.loadPixels();
-  rSrc = loadImage("img/illustration_bizarre.jpg");
+  rSrc = loadImage("http://dribbble.s3.amazonaws.com/users/43934/screenshots/1037557/shot90.jpg");
   rSrc.loadPixels();
-  gSrc = loadImage("img/illustration_bizarre.jpg");
+  gSrc = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   gSrc.loadPixels();
-  bSrc = loadImage("img/illustration_bizarre.jpg");
+  bSrc = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   bSrc.loadPixels();
   physics = new VerletPhysics2D();
-  physics.setDrag(0.75f);
+  physics.setDrag(0.5f);
   shapeSrc = loadImage("data/img/shape.png");
   shapeSrc.loadPixels();
   for (int i = 0; i < shapeSrc.pixels.length; i++) {
@@ -36,7 +36,7 @@ void setup() {
     if (shapeSrc.pixels[i] == 0xFF00FF00) gPixels.add(new PVector(i % shapeSrc.width, i / shapeSrc.width));
     if (shapeSrc.pixels[i] == 0xFF0000FF) bPixels.add(new PVector(i % shapeSrc.width, i / shapeSrc.width));
   }
-  noiseDetail(8);
+  noiseDetail(16);
 }
 
 void draw() {
@@ -48,7 +48,7 @@ void draw() {
     p.tick();
     p.render(canvas);
     if (p.age > p.lifetime) physics.removeParticle(p);
-    if (p.x >= width - 10|| p.x <= 10 || p.y >= height - 10 || p.y <= 10) {
+    if (p.x >= width - 10 || p.x <= 10 || p.y >= height - 10 || p.y <= 10) {
       physics.removeParticle(p);
     }
   }
@@ -82,7 +82,7 @@ void keyPressed() {
   if (key == '2') {    
     for (int i = 0; i < 300; i++) {
       PVector p = gPixels.get(floor(random(gPixels.size())));
-     // addParticle(p.x, p.y, gSrc);
+      // addParticle(p.x, p.y, gSrc);
     }
   }
   if (key == '3') {    
@@ -103,11 +103,11 @@ void keyPressed() {
   if (key == ' ') attractors.clear();
   if (key == 'q') physics.clear();
   if (key == 's' || key == 'S') {
-//    PGraphics img = createGraphics(canvas.width, canvas.height, P2D);
-//    img.beginDraw();
-//    renderBackground(img, 0xFF000000);
-//    img.image(canvas, 0, 0);
-//    img.endDraw();
+    //    PGraphics img = createGraphics(canvas.width, canvas.height, P2D);
+    //    img.beginDraw();
+    //    renderBackground(img, 0xFF000000);
+    //    img.image(canvas, 0, 0);
+    //    img.endDraw();
     this.save("data/output/composition-" + month() + "-" + day() + "-" + hour() + "-" + minute() + "-" + second() + ".tif");
     this.save("/Users/riebschlager/Dropbox/Public/p5/composition-" + month() + "-" + day() + "-" + hour() + "-" + minute() + "-" + second() + ".png");
   }

@@ -27,27 +27,27 @@ class Particle extends VerletParticle2D {
     behavior = _index;
     switch(_index) {
     case 1:    
-      maxRadius = random(100, 200);
+      maxRadius = random(100, 120);
       lifetime = random(500, 1000);
       radiusStep = 0.005;
       colorStep = 0.005;
-      xStep = 0.005;
-      yStep = 0.005;
-      fxMin = -2;
-      fxMax = 2;
+      xStep = 0.05;
+      yStep = 0.05;
+      fxMin = -1;
+      fxMax = 1;
       fyMin = -1;
       fyMax = 1;
       strokeWeight = 0.25;
       strokeColor = 0x44000000;
-      fillAlpha = 90;
+      fillAlpha = 20;
       break;
     case 2:
       maxRadius = random(5, 10);
       lifetime = random(10, 500);
-      radiusStep = 0.005;
+      radiusStep = 0.035;
       colorStep = 0.005;
-      xStep = 0.005;
-      yStep = 0.005;
+      xStep = 0.05;
+      yStep = 0.05;
       fxMin = -1;
       fxMax = 1;
       fyMin = -1;
@@ -99,13 +99,15 @@ class Particle extends VerletParticle2D {
     float vy = map(noise(yNoise), 0, 1, fyMin, fyMax);
     Vec2D vv = new Vec2D(vx, vy);
     addForce(vv);
-    if (random(1) > 0.99 && physics.particles.size() < 200) {
-      Particle p = new Particle(x, y, behavior, colorSource);
-      float r = map(noise(radiusNoise), 0, 1, maxRadius / 10, maxRadius);
-      r = r - (r * (age/lifetime));
-      p.maxRadius = r;
-      p.lifetime = this.lifetime / 1.05;
-      physics.addParticle(p);
+    if (random(1) > 0.99 && physics.particles.size() < 55) {
+      for (int i = 0; i < 5; i++) {
+        Particle p = new Particle(x, y, behavior, colorSource);
+        float r = map(noise(radiusNoise), 0, 1, maxRadius / 2, maxRadius);
+        r = r - (r * (age/lifetime));
+        p.maxRadius = r;
+        p.lifetime = this.lifetime / 1.25;
+        physics.addParticle(p);
+      }
     }
   }
 
@@ -117,12 +119,12 @@ class Particle extends VerletParticle2D {
       _canvas.strokeWeight(strokeWeight);
       _canvas.stroke(strokeColor);
     }
-    int c = src.get((int) x1, (int) y1);
-    _canvas.fill(c, fillAlpha);
+    //int c = src.get((int) x1, (int) y1);
+    //_canvas.fill(c, fillAlpha);
     //if (c == 0xFF000000) {
     _canvas.fill(lerpColor(pixel1, pixel2, noise(colorNoise)));
     //}
-    float r = map(noise(radiusNoise), 0, 1, maxRadius / 10, maxRadius);
+    float r = map(noise(radiusNoise), 0, 1, maxRadius / 2, maxRadius);
     r = r - (r * (age/lifetime));
     if (getVelocity().magnitude() < 0.1) {
       _canvas.noStroke();
