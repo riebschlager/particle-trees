@@ -27,19 +27,19 @@ class Particle extends VerletParticle2D {
     behavior = _index;
     switch(_index) {
     case 1:    
-      maxRadius = random(100, 120);
-      lifetime = random(500, 1000);
+      maxRadius = 100;
+      lifetime = 3000;
       radiusStep = 0.005;
-      colorStep = 0.005;
-      xStep = 0.05;
-      yStep = 0.05;
-      fxMin = -1;
-      fxMax = 1;
-      fyMin = -1;
-      fyMax = 1;
-      strokeWeight = 0.25;
-      strokeColor = 0x44000000;
-      fillAlpha = 20;
+      colorStep = 0.025;
+      xStep = 0.0005;
+      yStep = 0.0005;
+      fxMin = -0.25;
+      fxMax = 0.25;
+      fyMin = -0.25;
+      fyMax = 0.25;
+      strokeWeight = 0.5;
+      strokeColor = 0x22000000;
+      fillAlpha = 100;
       break;
     case 2:
       maxRadius = random(5, 10);
@@ -99,13 +99,19 @@ class Particle extends VerletParticle2D {
     float vy = map(noise(yNoise), 0, 1, fyMin, fyMax);
     Vec2D vv = new Vec2D(vx, vy);
     addForce(vv);
-    if (random(1) > 0.99 && physics.particles.size() < 55) {
+    if (random(1) > 0.99 && physics.particles.size() < 500) {
       for (int i = 0; i < 5; i++) {
         Particle p = new Particle(x, y, behavior, colorSource);
         float r = map(noise(radiusNoise), 0, 1, maxRadius / 2, maxRadius);
         r = r - (r * (age/lifetime));
         p.maxRadius = r;
-        p.lifetime = this.lifetime / 1.25;
+        p.lifetime = this.lifetime / 1.5;
+        p.xStep = xStep * 2.5;
+        p.yStep = yStep * 1.5;
+        p.fxMin = fxMin * 1.15;
+        p.fxMax = fxMax * 1.15;
+        p.fyMin = fyMin * 1.15;
+        p.fyMax = fyMax * 1.15;
         physics.addParticle(p);
       }
     }
@@ -119,10 +125,14 @@ class Particle extends VerletParticle2D {
       _canvas.strokeWeight(strokeWeight);
       _canvas.stroke(strokeColor);
     }
-    //int c = src.get((int) x1, (int) y1);
+    int c = src.get((int) x1, (int) y1);
+    if(c == 0xFFFFFFFF) _canvas.fill(pixel1);
+    else _canvas.fill(pixel2,1);
+    //_canvas.fill(lerpColor(pixel1,0xFF000000,map(brightness(c),0,255,0.4,1.0)));
+    //_canvas.fill(lerpColor(c, pixel2, noise(colorNoise)));
     //_canvas.fill(c, fillAlpha);
     //if (c == 0xFF000000) {
-    _canvas.fill(lerpColor(pixel1, pixel2, noise(colorNoise)));
+    //_canvas.fill(lerpColor(pixel1, pixel2, noise(colorNoise)));
     //}
     float r = map(noise(radiusNoise), 0, 1, maxRadius / 2, maxRadius);
     r = r - (r * (age/lifetime));

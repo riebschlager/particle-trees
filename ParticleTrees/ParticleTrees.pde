@@ -17,11 +17,12 @@ void setup() {
   canvas.beginDraw();
   canvas.endDraw();
   size(floor(canvas.width), floor(canvas.height));
-  background = loadImage("data/img/background.png");
+  background = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   if (background.width != width || background.height != height) background.resize(width, height);
-  src = loadImage("img/src.png");
+  src = loadImage("img/apple-wallpaper-white-78.jpg");
+  src.filter(THRESHOLD);
   src.loadPixels();
-  rSrc = loadImage("http://dribbble.s3.amazonaws.com/users/43934/screenshots/1037557/shot90.jpg");
+  rSrc = loadImage("http://dribbble.s3.amazonaws.com/users/122603/screenshots/1224338/burning-lies-reinked-detail.jpg");
   rSrc.loadPixels();
   gSrc = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   gSrc.loadPixels();
@@ -29,7 +30,7 @@ void setup() {
   bSrc.loadPixels();
   physics = new VerletPhysics2D();
   physics.setDrag(0.5f);
-  shapeSrc = loadImage("data/img/shape.png");
+  shapeSrc = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   shapeSrc.loadPixels();
   for (int i = 0; i < shapeSrc.pixels.length; i++) {
     if (shapeSrc.pixels[i] == 0xFFFF0000) rPixels.add(new PVector(i % shapeSrc.width, i / shapeSrc.width));
@@ -109,7 +110,7 @@ void keyPressed() {
     //    img.image(canvas, 0, 0);
     //    img.endDraw();
     this.save("data/output/composition-" + month() + "-" + day() + "-" + hour() + "-" + minute() + "-" + second() + ".tif");
-    this.save("/Users/riebschlager/Dropbox/Public/p5/composition-" + month() + "-" + day() + "-" + hour() + "-" + minute() + "-" + second() + ".png");
+    this.save("/Users/criebsch/Dropbox/Public/p5/composition-" + month() + "-" + day() + "-" + hour() + "-" + minute() + "-" + second() + ".png");
   }
 }
 
