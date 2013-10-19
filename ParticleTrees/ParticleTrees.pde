@@ -19,7 +19,7 @@ void setup() {
   size(floor(canvas.width), floor(canvas.height));
   background = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   if (background.width != width || background.height != height) background.resize(width, height);
-  src = loadImage("img/apple-wallpaper-white-78.jpg");
+  src = loadImage("http://dribbble.s3.amazonaws.com/users/52084/screenshots/1227270/tag.jpg");
   src.filter(THRESHOLD);
   src.loadPixels();
   rSrc = loadImage("http://dribbble.s3.amazonaws.com/users/122603/screenshots/1224338/burning-lies-reinked-detail.jpg");
